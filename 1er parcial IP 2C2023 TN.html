@@ -1,0 +1,226 @@
+<h1>Parcial - tema2</h1>
+<p>Nota: 10.0 / 10.0 (APROBADO)</p>
+<pre><code>puntaje ej1: 1
+puntaje ej2: 3
+puntaje ej3: 3
+puntaje ej4: 3
+</code></pre>
+<h2>Datos del alumno</h2>
+<p>Nombre: apellido nombre</p>
+<p>LU: 0000/00</p>
+<h2>Enunciado</h2>
+<html>
+<head>
+  <link rel="icon" href="data:,">
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body style="width: 50%;margin: 1% auto;">
+
+<div>
+
+<h1>Introducción a la Programación</h1> 
+<h2>Primer Parcial - Turno Noche</h2>
+<ul>
+  <li>El parcial se aprueba con 6 puntos</li>
+  <li>Podrás utilizar las siguientes funciones del prelude</li>
+  <ul>
+    <li>Listas: head, tail, last, init, length, elem, ++</li>
+    <li>Tuplas: fst, snd</li>
+    <li>Operaciones lógicas: &&, ||, not</li>
+    <li>Constructores de listas: (x:xs), []</li>
+    <li>Constructores de tuplas: (x,y)</li>
+  </ul>  
+  <li>Si querés utilizar Hunit para testear tu código <a href="/static/hunit_example.html">acá</a> tenés un script de ejemplo.</li>
+</ul>  
+
+<form name="form1" action="/submit_examen" method="post" onsubmit="return validaciones(event)">
+  <h2 style="color:#3498DB">¡Vamos campeón!</h2>
+  <p> En Exactas se está jugando un torneo de fútbol y la facultad le pidió a los alumnos de IP programar algunas funcionalidades en Haskell. Los datos con los que contamos para esto son los nombres de los equipos que participan del torneo, los nombres de los arqueros titulares de cada uno de dichos equipos, y la cantidad de goles recibidos por esos arqueros. Los nombres de los equipos y sus respectivos arqueros serán modelados mediante tuplas de tipo <code>(String, String)</code>, donde la primera componente representa el nombre del equipo, y la segunda representa el nombre del arquero titular de dicho equipo.</p>
+
+  <p>En los problemas en los cuales se reciban como parámetros secuencias <i>arquerosPorEquipo</i> y <i>goles</i>, cada posición de la lista <i>goles</i> representará la cantidad de goles recibidos por el arquero del equipo que se encuentra en esa misma posición de <i>arquerosPorEquipo</i>. Por ejemplo, si la lista de <i>arquerosPorEquipo</i> es [("Sacachispas","Neyder Aragón"), ("Fénix","Nahuel Galardi")]  y la lista de goles es [3, 5], eso indicaría que Neyder Aragón recibió 3 goles, y Nahuel Galardi 5.  </p>
+
+  <hr style="width: 100%;">
+  <h3 style="color:#1A5276">1) Atajaron Suplentes [1 punto]</h3>
+  <p> problema atajaronSuplentes (<i>arquerosPorEquipo</i>: seq⟨String x String⟩,<i>goles</i>:seq< Z >, <i>totalGolesTorneo</i>: Z) : Z {<br>
+    &nbsp; <strong>requiere:</strong> {equiposValidos(<i>arquerosPorEquipo</i>)} <br> 
+    &nbsp; <strong>requiere:</strong> {|<i>arquerosPorEquipo</i>| = |<i>goles</i>|} <br>
+    &nbsp; <strong>requiere:</strong> {Todos los elementos de <i>goles</i> son mayores o iguales a 0} <br>
+    &nbsp; <strong>requiere:</strong> {La suma de todos los elementos de <i>goles</i> es menor o igual a <i>totalGolesTorneo</i>}<br>
+    &nbsp; <strong>asegura:</strong> {<i>res</i> es la cantidad de goles recibidos en el torneo por arqueros que no
+     son los titulares en sus equipos}<br>
+  }<br>
+  </p>
+
+  <hr style="width: 100%;">
+  <h3 style="color:#1A5276">2) Equipos Válidos  [3 puntos]</h3>
+  <p>problema equiposValidos (<i>arquerosPorEquipo</i>: seq⟨String x String⟩) : Bool {<br>
+    &nbsp; <strong>requiere:</strong> {True} <br>
+    &nbsp; <strong>asegura:</strong> {(<i>res</i> = true) <=> <i>arquerosPorEquipo</i> no contiene nombres de clubes repetidos, ni arqueros repetidos, ni jugadores con nombre de club} <br>
+  }<br>
+  </p>
+
+  <hr style="width: 100%;">
+  <h3 style="color:#1A5276">3) Porcentaje de Goles  [3 puntos]</h3>
+  <p>problema porcentajeDeGoles (<i>arquero</i>: String, <i>arquerosPorEquipo</i>: seq⟨String x String⟩,<i>goles</i>:seq< Z >) : R { <br>
+    &nbsp; <strong>requiere:</strong> {La segunda componente de algún elemento de <i>arquerosPorEquipo</i> es <i>arquero</i>} <br>
+    &nbsp; <strong>requiere:</strong> {equiposValidos(<i>arquerosPorEquipo</i>)} <br>
+    &nbsp; <strong>requiere:</strong> {|<i>arquerosPorEquipo</i>| = |<i>goles</i>|} <br>
+    &nbsp; <strong>requiere:</strong> {Todos los elementos de <i>goles</i> son mayores o iguales a 0} <br>
+    &nbsp; <strong>requiere:</strong> {Hay al menos un elemento de <i>goles</i> mayores estricto a 0} <br>
+    &nbsp; <strong>asegura:</strong> {<i>res</i> es el porcentaje de goles que recibió <i>arquero</i> sobre el total de goles recibidos por arqueros titulares}<br>
+  }
+  </p>
+  Para resolver este ejercicio pueden utilizar la siguiente función que devuelve como Float la división entre dos números de tipo Int:
+  <br>
+  <br>
+  <code>
+  division :: Int -> Int -> Float <br>
+  division a b = (fromIntegral a) / (fromIntegral b)   <br>
+  </code>
+
+  <hr style="width: 100%;">
+  <h3 style="color:#1A5276">4) Valla menos vencida  [3 puntos]</h3>
+  <p>problema vallaMenosVencida (<i>arquerosPorEquipo</i>: seq⟨String x String⟩, <i>goles</i>:seq< Z ></Z>) : String {<br>
+    &nbsp; <strong>requiere:</strong> {equiposValidos(<i>arquerosPorEquipo</i>)} <br>
+    &nbsp; <strong>requiere:</strong> {|<i>arquerosPorEquipo</i>| = |<i>goles</i>|} <br>
+    &nbsp; <strong>requiere:</strong> {Todos los elementos de <i>goles</i> son mayores o iguales a 0} <br>
+    &nbsp; <strong>requiere:</strong> {|<i>goles</i>| > 0} <br>
+    &nbsp; <strong>asegura:</strong> {<i>res</i> es alguno de los arqueros de <i>arquerosPorEquipo</i> que menos goles recibió de acuerdo a <i>goles</i>}<br>
+  }<br>
+  </p>
+
+  <hr style="width: 100%;">
+  <h3 style="color:#1A5276">Completa aca el codigo Haskell:</h3>
+  <p>A continuación te dejamos una estructura básica para resolver los ejercicios. Este código no pretende resolver ningun caso de los ejercicios planteados, es sólo una plantilla.</p>
+  <textarea name="respuesta_ej1" id="respuesta_ej1" rows="20" cols="80" >
+module Solucion where
+
+-- Ejercicio 1
+atajaronSuplentes :: [(String, String)] -> [Int] -> Int  -> Int
+atajaronSuplentes _ _ _ = 0
+
+-- Ejercicio 2 
+equiposValidos :: [(String, String)] -> Bool 
+equiposValidos _ = True
+
+-- Ejercicio 3
+porcentajeDeGoles :: String -> [(String, String)] -> [Int] -> Float
+porcentajeDeGoles _ _ _ = 0.0
+
+-- Ejercicio 4
+vallaMenosVencida :: [(String, String)] -> [Int] -> String
+vallaMenosVencida _ _ = ""
+  </textarea>
+
+  <input type="submit" value="Enviar" 
+        style= "background-color: #1A5276; border-radius: 5px; 
+                margin-top:10px;padding: 10px 150px;color: #FFFFFF;
+                font-size: 20px;cursor: pointer; width:100%" >
+
+</form>
+</div>
+<script>
+  function validaciones(event) {
+    var confirmacion = confirm("Confirmo que revise mis respuestas y que quiero entregar mi examen");
+    if (!confirmacion) {
+        event.preventDefault();
+        event.returnValue = false;
+        return false;
+      }
+      event.returnValue = true;
+      return true;
+  }
+</script>
+</body>
+
+</html>
+
+<h2>Solucion entregada por el alumno</h2>
+<pre><code>module Solucion where
+
+-- 1 --
+atajaronSuplentes :: [(String, String)] -&gt; [Int] -&gt; Int  -&gt; Int
+atajaronSuplentes _ goles totalGolesTorneo = totalGolesTorneo - golesTotales(goles)
+--usé la función golesTotales del pto 3 que me tira los goles recibidos por titulares
+
+-- 2 --
+equiposValidos :: [(String,String)] -&gt; Bool
+equiposValidos arquerosPorEquipo = noHayRepetidos(aplanar arquerosPorEquipo)
+
+noHayRepetidos :: [String] -&gt; Bool
+noHayRepetidos [] = True
+noHayRepetidos (x:xs)
+    | null xs = True
+    | elem x xs = False
+    | otherwise = noHayRepetidos xs
+
+aplanar :: [(String,String)] -&gt; [String]
+aplanar [] = []
+aplanar ((x,y):xs) = x:y:aplanar xs
+
+
+-- 3 --
+porcentajeDeGoles :: String -&gt; [(String,String)] -&gt; [Int] -&gt; Float
+porcentajeDeGoles arquero arquerosPorEquipo goles = division ((golesDeArquero arquero arquerosPorEquipo goles)*100) (golesTotales goles)
+
+golesDeArquero :: String -&gt; [(String,String)] -&gt; [Int] -&gt; Int
+golesDeArquero arquero ((club,arqueroClub):xs) (goles:ys)
+    | arquero == arqueroClub = goles
+    | otherwise = golesDeArquero arquero xs ys
+
+golesTotales :: [Int] -&gt; Int
+golesTotales [] = 0
+golesTotales (x:xs) = x + golesTotales xs
+
+division :: Int -&gt; Int -&gt; Float
+division a b = (fromIntegral a) / (fromIntegral b) 
+
+
+-- 4 --
+vallaMenosVencida :: [(String, String)] -&gt; [Int] -&gt; String
+vallaMenosVencida arquerosPorEquipo goles = menosGoleado (arqueroxGoles arquerosPorEquipo goles) (head(arqueroxGoles arquerosPorEquipo goles))
+
+menosGoleado :: [(String,Int)] -&gt; (String,Int) -&gt; String
+menosGoleado ((arquero,goles):xs) menor
+    | null xs &amp;&amp; (snd menor) &gt;= goles = arquero
+    | null xs &amp;&amp; (snd menor) &lt; goles = (fst menor)
+    | (snd menor) &gt;= goles = menosGoleado xs (arquero,goles)
+    | otherwise = menosGoleado xs menor
+
+arqueroxGoles :: [(String,String)] -&gt; [Int] -&gt; [(String,Int)]
+arqueroxGoles [] []= []
+arqueroxGoles ((club,arqueroClub):xs) (goles:ys) = (arqueroClub,goles) : arqueroxGoles xs ys
+
+</code></pre>
+<h2>Resultado de la compilacion</h2>
+<pre><code>Loaded package environment from /
+[1 of 1] Compiling Solucion         ()
+
+</code></pre>
+<h2>Ejecucion de los tests</h2>
+<h3>Tema2-test-ej1.hs.compilacion.out</h3>
+<p>Puntaje del ej: 1 / 1</p>
+<pre><code>
+Cases: 9  Tried: 9  Errors: 0  Failures: 0
+
+</code></pre>
+<h3>Tema2-test-ej2.hs.compilacion.out</h3>
+<p>Puntaje del ej: 3 / 3</p>
+<pre><code>
+Cases: 31  Tried: 31  Errors: 0  Failures: 0
+
+</code></pre>
+<h3>Tema2-test-ej3.hs.compilacion.out</h3>
+<p>Puntaje del ej: 3 / 3</p>
+<pre><code>
+Cases: 12  Tried: 12  Errors: 0  Failures: 0
+
+</code></pre>
+<h3>Tema2-test-ej4.hs.compilacion.out</h3>
+<p>Puntaje del ej: 3 / 3</p>
+<pre><code>
+Cases: 10  Tried: 10  Errors: 0  Failures: 0
+
+</code></pre>
+<p>FIN</p>
